@@ -1,24 +1,23 @@
 pipeline {
     agent any
 
-    tools {
-        jdk 'jdk21'
-    }
-
     environment {
         GEMINI_API_KEY = credentials('gemini-api-key')
     }
 
     stages {
+
         stage('Checkout') {
             steps {
-                git branch: 'main',
-                    url: 'https://github.com/chandandhabale/TalentVector.git'
+                git url: 'https://github.com/chandandhabale/TalentVector.git',
+                    branch: 'main'
             }
         }
 
         stage('Build') {
             steps {
+                sh 'java -version'
+                sh 'mvn -version'
                 sh 'mvn clean package -DskipTests'
             }
         }
